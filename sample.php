@@ -7,6 +7,6 @@
     <title>FonyProject</title>
 </head>
 <body>
-    <h1>Welcome to india.</h1>
+    <h1>Welcome to india.It is my first Practice project in php  </h1>
 </body>
 </html>
