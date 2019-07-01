@@ -1,0 +1,183 @@
+<!-- main app container -->
+<div class="jumbotron">
+    <div class="container">
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+			<button (click)="setOpen()">Open</button>
+			<button (click)="setClose()">Close</button>
+			<button (click)="setFocus()">Focus</button>
+			<button (click)="setOpen()">new</button>
+			<label>Your first ng-select</label>
+			{{ selectedCity }}
+			</div>
+		</div>
+		<div class="row">
+			<ngb-accordion #acc="ngbAccordion" closeOthers="true" activeIds="fancy_title">
+			  <ngb-panel title="" id="simple_title">
+					<ng-template #tipContent>Tooltip, sample</ng-template>
+					<ng-template ngbPanelTitle >
+						<span [ngbTooltip]="tipContent" placement="right"><b>Simple</b></span>
+					</ng-template>
+					<ng-template ngbPanelContent>
+					Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+					aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+					sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+					craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+					occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+					labore sustainable VHS.
+					</ng-template>
+			  </ngb-panel>
+			  <ngb-panel id="fancy_title">
+						<ng-template placement="bottom" #tipContent2>Fancy, sample</ng-template>
+						<ng-template ngbPanelTitle >
+							<span [ngbTooltip]="tipContent2" placement="right">&#9733; <b>Fancy</b> title &#9733;</span>
+						</ng-template>
+				<ng-template ngbPanelContent>
+				  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+				  aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+				  sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+				  craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+				  occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+				  labore sustainable VHS.
+				</ng-template>
+			  </ngb-panel>
+			  <ngb-panel title="Disabled" [disabled]="true">
+				<ng-template ngbPanelContent>
+				  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+				  aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+				  sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+				  craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+				  occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+				  labore sustainable VHS.
+				</ng-template>
+			  </ngb-panel>
+			</ngb-accordion>
+
+			<label for="typeahead-basic">Search for a state:</label>
+			<!--<input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"/>-->
+
+			<input
+			id="typeahead-focus"
+			type="text"
+			class="form-control"
+			[(ngModel)]="state_model"
+			[ngbTypeahead]="search_type_ahead"
+			(focus)="focus$.next($event.target.value)"
+			(click)="click$.next($event.target.value)"
+			[focusFirst]="false"
+			[showHint]="true"
+			(selectItem)="typeahead_sel($event)"
+			[resultFormatter]="resultFormatBandListValue"
+         	[inputFormatter]="inputFormatBandListValue"
+			#instance="ngbTypeahead"
+			placeholder="Search Your Car"
+			/>
+			<hr>
+			<pre>Model: {{ state_model | json }}</pre>
+		</div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h3>Angular 7 Reactive Form Validation</h3>
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off" novalidate>
+					<ng-select
+						#city_select
+						[items]="cities"
+						[clearable]="true"
+						[virtualScroll]="true"
+						bindLabel="name"
+						placeholder="Select city"
+						typeToSearchText="search city"
+						dropdownPosition="bottom"
+						(change)="getCity($event)"
+						[(ngModel)]="selectedCity"
+						[ngModelOptions]="{standalone: true}">
+					</ng-select>
+					<div class="form-group">
+					<!--<ul>-->
+						<span *ngFor="let state of cities; let i = index;">
+							<div class="row" *ngIf="i%4==0;">
+								<div *ngIf="cities[i]">{{ cities[i].name }}</div>
+								<div *ngIf="cities[i+1]">{{ cities[i+1].name }}</div>
+								<div *ngIf="cities[i+2]">{{ cities[i+2].name }}</div>
+								<div *ngIf="cities[i+3]">{{ cities[i+3].name }}</div>
+							</div>
+						</span>
+					<!--</ul>-->
+					
+					</div>
+
+                    <div class="form-group">
+						<label>First Name</label>
+						<input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': (submitted && f.firstName.errors) || (f.firstName.touched && f.firstName.errors) }" pattern="[a-zA-Z ]*" [placeholder]="!submitted || !f.firstName.errors ? 'First Name' : ''" />
+
+						<div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+							<div *ngIf="f.firstName.errors.required">First Name is required</div>
+							<div *ngIf="f.firstName.errors.pattern">Enter a valid first name</div>
+						</div>
+					</div>
+					
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': (submitted && f.lastName.errors) || (f.lastName.touched && f.lastName.errors) }" pattern="[a-zA-Z ]*" [placeholder]="!submitted || !f.lastName.errors ? 'Last Name' : ''" />
+                        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                            <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+							<div *ngIf="f.lastName.errors.pattern">Enter a valid last name</div>
+							<div *ngIf="f.lastName.errors.mustMatch">First name & Last name must be match</div>
+						</div>
+					</div>
+					
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': (submitted && f.email.errors) || (f.email.touched && f.email.errors) }" pattern="\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$" placeholder="Enter Email" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+							<div *ngIf="f.email.errors.pattern">Email must be a valid email address</div>
+                        </div>
+					</div>
+					
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="text" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': (submitted && f.password.errors) || (f.password.touched && f.password.errors) }" placeholder="Password" autocomplete="new-password" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                        </div>
+					</div>
+					
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" formControlName="confirmPassword" class="form-control"[ngClass]="{ 'is-invalid': (submitted && f.confirmPassword.errors) || (f.confirmPassword.touched && f.confirmPassword.errors) }" placeholder="confirm password" autocomplete="new-password" />
+                        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                            <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords & Confirm Password must match</div>
+						</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>DOB TEST</label>
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                        formControlName="dp" ngbDatepicker #q="ngbDatepicker" (click)="q.toggle()" (dateSelect) = "onSelect($event)" [footerTemplate]="t">
+					</div>
+					
+					<div class="form-group">
+                        <label>DOB TEST</label>
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                        formControlName="newdp" ngbDatepicker #qnew="ngbDatepicker" (click)="qnew.toggle()" (dateSelect) = "onSelect($event)" [footerTemplate]="t">
+					</div>
+					
+					<div class="form-group">
+                        <label>Hobbie</label>
+                        <input class="form-control" type="checkbox" formControlName="hobbie" >
+                    </div>
+					
+                    <div class="form-group">
+						<button class="form-control btn btn-primary" type="submit">Register</button>
+						<!--<button class="form-control btn btn-primary" type="submit" [disabled]="!registerForm.valid">Register</button>-->
+					</div>
+                </form>
+                <hr/>
+            </div>
+        </div>
+    </div>
+</div>

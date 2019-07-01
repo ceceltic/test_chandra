@@ -1,0 +1,87 @@
+<!-- main app container -->
+<div class="jumbotron">
+    <div class="container">
+	ggggggggggggg
+		
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h3>Angular 7 Reactive Form Validation</h3>
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+				
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" formControlName="firstName" class="form-control"  pattern="[a-zA-Z ]*" />
+                        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                            <div *ngIf="f.firstName.errors.required">First Name is required</div>
+							<div *ngIf="f.firstName.errors.pattern">Enter a valid first name</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" pattern="[a-zA-Z ]*" />
+                        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                            <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+							<div *ngIf="f.lastName.errors.pattern">Enter a valid last name</div>
+							<div *ngIf="f.confirmPassword.errors.twoFieldMatch">fname & lname must match</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" pattern="\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+							<div *ngIf="f.email.errors.pattern">Email must be a valid email address</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                            <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords & Confirm Password must match</div>
+						</div>
+                    </div>
+					<div class="form-group">
+                        <label>DOB</label>
+                        <input type="text" class="form-control" formControlName="dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" [ngClass]="{ 'is-invalid': submitted && f.dob.errors }"/>
+                        <div *ngIf="submitted && f.dob.errors" class="invalid-feedback">
+                            <div *ngIf="f.confirmPassword.errors.required">DOB is required</div>
+						</div>
+                    </div>
+					
+					<div class="form-group">
+                        <label>DOB</label>
+                        <input type="text" class="form-control" formControlName="dob2" ngbDatepicker #p="ngbDatepicker" [minDate]="{year: 2019, month: 04, day: 10}" (click)="p.toggle()" [ngClass]="{ 'is-invalid': submitted && f.dob2.errors }"/>
+                        <div *ngIf="submitted && f.dob2.errors" class="invalid-feedback">
+                            <div *ngIf="f.dob2.errors.required">DOB2 is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>DOB TEST</label>
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                        formControlName="dp" ngbDatepicker #q="ngbDatepicker" (click)="q.toggle()" (dateSelect) = "onSelect($event)">
+                    </div>
+					
+					
+                    <div class="form-group">
+						<button class="form-control btn btn-primary" type="submit">Register</button>
+						<!--<button class="form-control btn btn-primary" type="submit" [disabled]="!registerForm.valid">Register</button>-->
+					</div>
+                </form>
+                <hr/>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<p>
+  home works!
+  <img src="/assets/eceltic_logo.jpg" />
+  <img src="{{imageSrc}}" />
+</p>
+
+
+<button (click)="myFocus()" (blur)="myBlur()">Click me</button>
+
+<h1 [ngClass]="{
+  'gray': h1Style,
+  'large': !h1Style
+}">Home</h1>
+
+<h2>My Heroes</h2>
+<ul class="heroes">
+  <li *ngFor="let hero of heroes"
+    [class.selected]="hero === selectedHero"
+    (click)="onSelect(hero)">
+    <span class="badge">{{hero.id}}</span> {{hero.name}}
+  </li>
+</ul>
+ 
+<div *ngIf="selectedHero">
+  <h2>{{selectedHero.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{selectedHero.id}}</div>
+  <div>
+    <label>name:
+      <input [(ngModel)]="selectedHero.name" placeholder="name">
+    </label>
+  </div>
+</div>
+
+<h2>My Crues</h2>
+<ul class="heroes">
+  <li *ngFor="let crue of crues"
+    [class.selected]="crue === selectedCrue"
+    (click)="onSelectCrue(crue)">
+    <span class="badge">{{crue.id}}</span> {{crue.name}}
+  </li>
+</ul>
+ 
+<div *ngIf="selectedCrue">
+  <h2>{{selectedCrue.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{selectedCrue.id}}</div>
+  <div>
+    <label>name:
+      <input [(ngModel)]="selectedCrue.name" placeholder="name">
+    </label>
+  </div>
+</div>

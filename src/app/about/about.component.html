@@ -1,0 +1,74 @@
+<p>
+  about works!
+</p>
+<p>
+<select2 [data]="exampleData" [cssImport]=true></select2>
+<button (click)="onClickMe()">Click me!</button>
+</p>
+
+<hr>
+Time: {{ time | date:'mediumTime' }}
+<hr>
+
+<!--<ngb-carousel *ngIf="images" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">-->
+<ngb-carousel *ngIf="images" [showNavigationIndicators]="true" [showNavigationArrows]="true" #myCarousel="ngbCarousel" [interval]="0">
+  <ng-template ngbSlide *ngFor="let image of image_arr; let item_counter = index" [id]="image.id">
+    <img [src]="image.text" alt="Random slide" style="width:100%;">
+    <div class="carousel-caption">
+      <h3>No mouse navigation {{image.id}}</h3>
+      <p>This carousel hides navigation arrows and indicators.</p>
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+<hr>
+<ul>
+  <li *ngFor='let item of new_images'> {{item}} </li>
+</ul>
+
+<div class="btn-group" role="group" aria-label="Carousel toggle controls">
+    <button type="button" (click)="naviGateCarousel()" class="btn btn-outline-dark btn-sm">Toggle navigation arrows</button>
+    <!--<button type="button" (click)="showNavigationArrows = !showNavigationArrows" class="btn btn-outline-dark btn-sm">Toggle navigation arrows</button>
+    <button type="button" (click)="showNavigationIndicators = !showNavigationIndicators" class="btn btn-outline-dark btn-sm">Toggle navigation indicators</button>-->
+</div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="dateOfBirth">Date of birth</label>
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+
+<hr>
+
+<pre>{{closeResult}}</pre>
+
+<hr>
+
+<div class="input-group">
+  <input id="dateOfBirthNew" class="form-control" placeholder="yyyy-mm-dd" name="dpnew" ngbDatepicker #dpnew="ngbDatepicker">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary calendar" (click)="dpnew.toggle()" type="button"></button>
+  </div>
+

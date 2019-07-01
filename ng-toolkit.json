@@ -1,0 +1,8 @@
+{
+  "universal": {
+    "project": "ng7-test",
+    "skipInstall": false,
+    "directory": ".",
+    "http": true
+  }
+}
